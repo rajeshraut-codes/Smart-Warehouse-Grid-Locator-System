@@ -1,0 +1,82 @@
+import java.util.*;
+
+class Location {
+    int row, col;
+
+    Location(int row, int col) {
+        this.row = row;
+        this.col = col;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + row + ", " + col + ")";
+    }
+}
+
+class Warehouse {
+    private String[][] grid;
+    private Map<String, Location> itemMap;
+
+    public Warehouse(int rows, int cols) {
+        grid = new String[rows][cols];
+        itemMap = new HashMap<>();
+    }
+
+    public void addItem(String itemId, int row, int col) {
+        if (grid[row][col] != null) {
+            System.out.println("Cell already occupied!");
+            return;
+        }
+        grid[row][col] = itemId;
+        itemMap.put(itemId, new Location(row, col));
+        System.out.println("Item " + itemId + " stored at " + row + "," + col);
+    }
+
+    public void findItem(String itemId) {
+        if (itemMap.containsKey(itemId)) {
+            System.out.println("Item " + itemId + " is at " + itemMap.get(itemId));
+        } else {
+            System.out.println("Item not found!");
+        }
+    }
+
+    public void removeItem(String itemId) {
+        Location loc = itemMap.get(itemId);
+        if (loc != null) {
+            grid[loc.row][loc.col] = null;
+            itemMap.remove(itemId);
+            System.out.println("Item removed from " + loc);
+        } else {
+            System.out.println("Item not found!");
+        }
+    }
+
+    public void displayGrid() {
+        System.out.println("\nWarehouse Grid:");
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                System.out.print((grid[i][j] == null ? "EMPTY" : grid[i][j]) + "\t");
+            }
+            System.out.println();
+        }
+    }
+}
+
+public class SmartWarehouseSystem {
+    public static void main(String[] args) {
+        Warehouse warehouse = new Warehouse(5, 5);
+
+        warehouse.addItem("A101", 0, 0);
+        warehouse.addItem("B205", 2, 3);
+        warehouse.addItem("C309", 4, 1);
+
+        warehouse.displayGrid();
+
+        warehouse.findItem("B205");
+        warehouse.findItem("X999");
+
+        warehouse.removeItem("A101");
+        warehouse.displayGrid();
+    }
+}
