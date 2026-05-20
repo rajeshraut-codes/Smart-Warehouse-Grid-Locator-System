@@ -1,101 +1,118 @@
-import java.util.Scanner;
+import java.util.*;
 class Item{
     int itemId;
     String itemName;
     String gridLocation;
     int quantity;
 
-    Item(int itemId, String itemName, String gridLocation, int quantity) {
-        this.itemId =itemId;
-        this.itemName =itemName;
-        this.gridLocation =gridLocation;
-        this.quantity= quantity;
+    Item(int itemId,String itemName,String gridLocation,int quantity){
+        this.itemId=itemId;
+        this.itemName=itemName;
+        this.gridLocation=gridLocation;
+        this.quantity=quantity;
     }
 
-    void displayItem() {
-        System.out.println("Item ID       : " + itemId);
-        System.out.println("Item Name     : " + itemName);
-        System.out.println("Grid Location : " + gridLocation);
-        System.out.println("Quantity      : " + quantity);
-        System.out.println("------------------------------");
+    void displayItem(){
+        System.out.println("Item ID : "+itemId);
+        System.out.println("Item Name : "+itemName);
+        System.out.println("Grid Location : "+gridLocation);
+        System.out.println("Quantity : "+quantity);
+        System.out.println("---------------------");
     }
 }
+
 class Warehouse{
-    Item items[] =new Item[5];
-    int count = 0;
+    Item items[]=new Item[10];
+    int count=0;
 
     void addItem(Item item){
-        items[count] =item;
+        items[count]=item;
         count++;
         System.out.println("Item Added Successfully!");
     }
 
-    void displayAllItems() {
-        if (count ==0) {
+    void displayAllItems(){
+        if(count==0){
             System.out.println("No Items Available.");
-        }else{
-            for (int i = 0; i < count; i++) {
+        }
+        else{
+            for(int i=0;i<count;i++){
                 items[i].displayItem();
             }
         }
     }
 
     void searchItem(int id){
-        boolean found =false;
-        for (int i = 0; i <count; i++) {
-            if (items[i].itemId ==id) {
+        boolean found=false;
+
+        for(int i=0;i<count;i++){
+            if(items[i].itemId==id){
                 System.out.println("Item Found!");
                 items[i].displayItem();
-                found = true;
+                found=true;
             }
         }
-        if (!found) {
+
+        if(found==false){
             System.out.println("Item Not Found.");
         }
     }
 }
+
 public class Main{
-    public static void main(String[] args) {
-        Scanner sc =new Scanner(System.in);
-        Warehouse warehouse =new Warehouse();
-        int choice;
-        do{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        Warehouse warehouse=new Warehouse();
+        int choice=1;
+
+        while(choice!=4){
             System.out.println("\n===== SMART WAREHOUSE GRID LOCATOR =====");
             System.out.println("1. Add Item");
             System.out.println("2. Display All Items");
             System.out.println("3. Search Item By ID");
             System.out.println("4. Exit");
+
             System.out.print("Enter Choice: ");
-            choice = sc.nextInt();
-            switch (choice){
+            choice=sc.nextInt();
+
+            switch(choice){
                 case 1:
                     System.out.print("Enter Item ID: ");
-                    int id = sc.nextInt();
-                    sc.nextLine();
-                    System.out.print("Enter Item Name: ");
-                    String name = sc.nextLine();
-                    System.out.print("Enter Grid Location: ");
-                    String location = sc.nextLine();
-                    System.out.print("Enter Quantity: ");
-                    int quantity = sc.nextInt();
+                    int id=sc.nextInt();
 
-                    Item item = new Item(id, name, location, quantity);
+                    sc.nextLine();
+
+                    System.out.print("Enter Item Name: ");
+                    String name=sc.nextLine();
+
+                    System.out.print("Enter Grid Location: ");
+                    String location=sc.nextLine();
+
+                    System.out.print("Enter Quantity: ");
+                    int quantity=sc.nextInt();
+
+                    Item item=new Item(id,name,location,quantity);
                     warehouse.addItem(item);
                     break;
+
                 case 2:
                     warehouse.displayAllItems();
                     break;
+
                 case 3:
                     System.out.print("Enter Item ID to Search: ");
-                    int searchId = sc.nextInt();
+                    int searchId=sc.nextInt();
+
                     warehouse.searchItem(searchId);
                     break;
+
                 case 4:
-                    System.out.println("Exiting Program...");
+                    System.out.println("Program Ended.");
                     break;
+
                 default:
                     System.out.println("Invalid Choice.");
             }
-        } while(choice != 4);
+        }
     }
 }
